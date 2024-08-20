@@ -95,6 +95,7 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
+        
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
             message: `Welcome back ${user.fullname}`,
             user,
@@ -116,13 +117,13 @@ export const logout = async (req, res) => {
 }
 export const updateProfile = async (req, res) => {
     try {
-        const { fullname, email, phoneNumber, bio, skills } = req.body;
-        
+        const { fullname, email, phoneNumber, bio, skills } = req.body;      
         const file = req.file;
-        // cloudinary ayega idhar
+        const cloudResponse="";
+        if(file){
         const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-
+            cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        }
 
 
         let skillsArray;
